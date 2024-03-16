@@ -3,53 +3,53 @@ export const tableCols = [
     {
         accessorKey: "id",
         header: "Id",
-        size: 100,
+        size: 50,
       },
       {
         accessorKey: "name",
         header: "Name",
         filterVariant: 'text',
-        size: 300,
+        size: 250,
         filterFn: 'fuzzy',
         
       },
       {
         accessorKey: "category",
         header: "Category",
-        size: 200,
+        size: 150,
         filterVariant: 'multi-select'
       },
       {
         accessorKey: "subcategory",
         header: "Subcategory",
-        size: 200,
+        size: 150,
         filterVariant: 'multi-select'
 
       },
       {
         accessorKey: "createdAt",
         header: "Created At",
-        size: 200,
+        size: 150,
         filterVariant: 'date-range',
         Cell: (value) => moment(value.renderedCellValue).format('DD-MMM-YYYY'),
       },
       {
         accessorKey: "updatedAt",
         header: "Updated At",
-        size: 200,
+        size: 150,
         Cell: (value) => moment(value.renderedCellValue).format('DD-MMM-YYYY'),
         filterVariant: 'date-range',
       },
       {
         accessorKey: "price",
         header: "Price",
-        size: 150,
+        size: 100,
         filterVariant :'range-slider'
       },
       {
         accessorKey: "sale_price",
         header: "Sale Price",
-        size: 150,
+        size: 100,
       },
 ]
 

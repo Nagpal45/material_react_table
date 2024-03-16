@@ -3,14 +3,15 @@ export const tableCols = [
     {
         accessorKey: "id",
         header: "Id",
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: "name",
         header: "Name",
         filterVariant: 'text',
-        size: 150,
-        filterFn: 'fuzzy'
+        size: 300,
+        filterFn: 'fuzzy',
+        
       },
       {
         accessorKey: "category",
@@ -21,21 +22,21 @@ export const tableCols = [
       {
         accessorKey: "subcategory",
         header: "Subcategory",
-        size: 150,
+        size: 200,
         filterVariant: 'multi-select'
 
       },
       {
         accessorKey: "createdAt",
         header: "Created At",
-        size: 150,
+        size: 200,
         filterVariant: 'date-range',
         Cell: (value) => moment(value.renderedCellValue).format('DD-MMM-YYYY'),
       },
       {
         accessorKey: "updatedAt",
         header: "Updated At",
-        size: 150,
+        size: 200,
         Cell: (value) => moment(value.renderedCellValue).format('DD-MMM-YYYY'),
         filterVariant: 'date-range',
       },

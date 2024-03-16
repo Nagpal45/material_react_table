@@ -57,14 +57,16 @@ const App = () => {
     muiTableBodyCellProps: {
       sx: {
         border: "none",
-        padding: "18px",
+        padding: "12px",
         fontSize: "0.9vw",
         textAlign: "center",
+        borderLeft: "1px solid rgba(224, 224, 224, 1)",
       },
     },
     muiTableHeadCellProps: {
       sx: {
         borderTop: "1px solid rgba(224, 224, 224, 1);",
+        borderLeft: "1px solid rgba(224, 224, 224, 1);",
         fontSize: "1vw",
         textAlign: "center",
         backgroundColor: "lightblue",
@@ -83,18 +85,14 @@ const App = () => {
     muiTableBodyRowProps: {
       hover: false,
     },
-    muiTableBodyProps: {
-      sx: {
-        border: "none",
-      },
-    },
+    
     muiTablePaperProps: {
       sx: {
         boxShadow: "none",
       },
     },
     muiTableProps: {
-      sx: { overflow: "hidden" },
+      sx: { overflow: "hidden", border:"1px solid gray" },
     },
     enableMultiSort: true,
     onSortingChange: setSorting,
@@ -113,7 +111,7 @@ const App = () => {
       variant: "outlined",
     },
     muiPaginationProps: {
-      color: "standard",
+      color: "primary",
       showRowsPerPage: false,
       showFirstButton: false,
       showLastButton: false,
@@ -311,8 +309,7 @@ const App = () => {
                 <div className={styles.sepLine}></div>
                 {/* <FilterPanel filters={columnFilters} setColumnFilters={setColumnFilters} data={data}/> */}
                 <Stack gap="0.5vw" sx={{height:"100%", width:"100%"}}>
-                
-                  {table.getLeafHeaders().slice(1,7).map((header) => (
+                  {table?.getLeafHeaders()?.map((header) => (
                     <div key={header.id} className={styles.filter}>
                     <p>{header.column.columnDef.header}</p>
                     <MRT_TableHeadCellFilterContainer

@@ -54,10 +54,16 @@ const App = () => {
         borderTop: "1px solid rgba(224, 224, 224, 1);",
         fontSize: "1vw",
         textAlign:"center",
-        padding: "18px",
-
+        backgroundColor:"lightblue",
+        
         '& .css-1w86f15':{
-          justifyContent: "center"
+          justifyContent: "center",
+          padding:"15px"
+        },
+
+        '& .css-i4bv87-MuiSvgIcon-root':{
+          display:"none",
+          cursor:"none"
         }
       },
     },
@@ -73,6 +79,9 @@ const App = () => {
       sx: {
         boxShadow: "none",
       },
+    },
+    muiTableProps:{
+      sx:{overflow:"hidden"}
     },
     enableMultiSort: true,
     onSortingChange: setSorting,
@@ -151,7 +160,7 @@ const App = () => {
           sx={{
             display: "flex",
             justifyContent: "center",
-            marginTop: "2vw",
+            marginTop: "1vw",
           }}
         >
           <MRT_TablePagination table={table} />

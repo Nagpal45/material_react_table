@@ -3,11 +3,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
 }
 
 .tableContainer{
-    width: 95%;
+    width: 92%;
 }
 
 .sidePanel{

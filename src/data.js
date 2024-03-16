@@ -1,4 +1,45 @@
-
+export const tableCols = [
+    {
+        accessorKey: "id",
+        header: "Id",
+        size: 150,
+      },
+      {
+        accessorKey: "name",
+        header: "Name",
+        size: 150,
+      },
+      {
+        accessorKey: "category",
+        header: "Category",
+        size: 200,
+      },
+      {
+        accessorKey: "subcategory",
+        header: "Subcategory",
+        size: 150,
+      },
+      {
+        accessorKey: "createdAt",
+        header: "Created At",
+        size: 150,
+      },
+      {
+        accessorKey: "updatedAt",
+        header: "Updated At",
+        size: 150,
+      },
+      {
+        accessorKey: "price",
+        header: "Price",
+        size: 150,
+      },
+      {
+        accessorKey: "sale_price",
+        header: "Sale Price",
+        size: 150,
+      },
+]
 
 export const data = [
     {

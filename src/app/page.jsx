@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
-import { data } from "@/data";
+import { data, tableCols } from "@/data";
 import {
   MRT_GlobalFilterTextField,
   MRT_TablePagination,
@@ -8,77 +8,23 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import styles from "./page.module.css";
+import { Box, Drawer, FormControlLabel, IconButton, Radio, Switch, Tooltip, lighten } from "@mui/material";
 import {
-  Box,
-  Button,
-  Checkbox,
-  Drawer,
-  FormControl,
-  IconButton,
-  InputLabel,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  MenuItem,
-  Select,
-  Switch,
-  Tooltip,
-  lighten,
-} from "@mui/material";
-import {
+  ArrowDownward,
+  ArrowUpward,
   FilterList,
   Layers,
   SwapVertTwoTone,
   VisibilityOutlined,
 } from "@mui/icons-material";
+import Group from "@/components/groupBar/group";
+import Showhide from "@/components/showHideBar/showHide";
+import Sort from "@/components/sortBar/sortBar";
 
 const App = () => {
-  const columns = useMemo(
-    () => [
-      {
-        accessorKey: "id",
-        header: "Id",
-        size: 150,
-      },
-      {
-        accessorKey: "name",
-        header: "Name",
-        size: 150,
-      },
-      {
-        accessorKey: "category",
-        header: "Category",
-        size: 200,
-      },
-      {
-        accessorKey: "subcategory",
-        header: "Subcategory",
-        size: 150,
-      },
-      {
-        accessorKey: "createdAt",
-        header: "Created At",
-        size: 150,
-      },
-      {
-        accessorKey: "updatedAt",
-        header: "Updated At",
-        size: 150,
-      },
-      {
-        accessorKey: "price",
-        header: "Price",
-        size: 150,
-      },
-      {
-        accessorKey: "sale_price",
-        header: "Sale Price",
-        size: 150,
-      },
-    ],
-    []
-  );
+  const columns = useMemo(() => tableCols, []);
+  const [sorting, setSorting] = useState([]); 
+  const [columnSorts, setColumnSorts] = useState({});
 
   const [sidePanel, setSidePanel] = useState("");
   const handleSidePanel = (type) => {
@@ -117,6 +63,8 @@ const App = () => {
         boxShadow: "none",
       },
     },
+    enableMultiSort: true,
+    onSortingChange: setSorting,
     enableGrouping: true,
     enableColumnActions: false,
     initialState: {
@@ -124,7 +72,7 @@ const App = () => {
       grouping: [],
       expanded: true,
     },
-    state: { columnVisibility },
+    state: { columnVisibility, sorting },
     onColumnVisibilityChange: setColumnVisibility,
 
     paginationDisplayMode: "pages",
@@ -160,20 +108,17 @@ const App = () => {
             }}
           >
             <MRT_GlobalFilterTextField table={table} />
-            <Tooltip title="Show">
-              <IconButton>
+            <Tooltip title="Show / Hide Columns">
+              <IconButton onClick={() => handleSidePanel("showHide")}>
                 <VisibilityOutlined />
               </IconButton>
             </Tooltip>
             <Tooltip title="Sort">
               <IconButton>
-                <SwapVertTwoTone />
+                <SwapVertTwoTone onClick={() => handleSidePanel("sort")}/>
               </IconButton>
             </Tooltip>
-            <Tooltip
-              title="Show/Hide Columns"
-              onClick={() => handleSidePanel("showHide")}
-            >
+            <Tooltip title="Filter" onClick={() => handleSidePanel("filter")}>
               <IconButton>
                 <FilterList />
               </IconButton>
@@ -217,6 +162,27 @@ const App = () => {
     setSidePanel("");
   };
 
+  const handleSortClick = (col) => {
+    const currentSort = columnSorts[col.accessorKey] || false;
+    console.log(currentSort);
+    const newDirection = !currentSort;
+    console.log(newDirection);
+    setColumnSorts({ ...columnSorts, [col.accessorKey]: newDirection });
+
+    const newSorting = sorting.map((sort) => {
+      if (sort.id === col.accessorKey) {
+        return { id: sort.id, desc: newDirection };
+      }
+      return sort;
+    });
+
+    if (!newSorting.find((s) => s.id === col.accessorKey)) {
+      newSorting.push({ id: col.accessorKey, desc: newDirection });
+    }
+    console.log(newSorting);
+    setSorting(newSorting)
+  };
+
   return (
     <div className={styles.app}>
       <div className={styles.tableContainer}>
@@ -228,67 +194,22 @@ const App = () => {
         onClose={() => handleSidePanel("")}
       >
         {sidePanel === "group" && (
-          <div className={styles.sidePanel}>
-            <h2>Create groups</h2>
-            <div className={styles.sepLine}></div>
-            <FormControl className={styles.select}>
-              <InputLabel id="demo-simple-select-label">
-                Select column
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={column}
-                label="Select Column"
-                onChange={handleChange}
-              >
-                <MenuItem value={"category"}>Category</MenuItem>
-                <MenuItem value={"subcategory"}>SubCategory</MenuItem>
-              </Select>
-              <Button
-                sx={{ marginTop: "3vw" }}
-                size="large"
-                className={styles.button}
-                variant="outlined"
-                onClick={handleGroup}
-              >
-                Apply Grouping
-              </Button>
-              <Button
-                onClick={handleUngroup}
-                sx={{ marginTop: "1vw" }}
-                size="large"
-                className={styles.button}
-                variant="contained"
-              >
-                Clear Grouping
-              </Button>
-            </FormControl>
-          </div>
+          <Group
+            column={column}
+            handleChange={handleChange}
+            handleGroup={handleGroup}
+            handleUngroup={handleUngroup}
+          />
         )}
         {sidePanel === "showHide" && (
-          <div className={styles.sidePanel}>
-            <h2>Show/Hide Columns</h2>
-            <div className={styles.sepLine}></div>
-            <List>
-              {columns.map((col) => (
-                <ListItem key={col.accessorKey}>
-                  <ListItemText primary={col.header} />
-                  <ListItemSecondaryAction>
-                    <Switch
-                      checked={columnVisibility[col.accessorKey]}
-                      onChange={(event) =>
-                        setColumnVisibility({
-                          ...columnVisibility,
-                          [col.accessorKey]: event.target.checked,
-                        })
-                      }
-                    />
-                  </ListItemSecondaryAction>
-                </ListItem>
-              ))}
-            </List>
-          </div>
+          <Showhide
+            columns={columns}
+            setColumnVisibility={setColumnVisibility}
+            columnVisibility={columnVisibility}
+          />
+        )}
+        {sidePanel === "sort" && (
+          <Sort columns={columns} columnSorts={columnSorts} setSorting={setSorting} handleSortClick={handleSortClick} setColumnSorts={setColumnSorts}/>
         )}
       </Drawer>
     </div>

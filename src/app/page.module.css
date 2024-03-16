@@ -1,13 +1,13 @@
 .app{
     width: 100%;
-    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
 .tableContainer{
-    width: 82%;
+    width: 95%;
 }
 
 .sidePanel{
@@ -16,7 +16,6 @@
     justify-content: flex-start;
     flex-direction: column;
     width: 500px;
-    height: 100%;
 }
 
 .sidePanel h2{
@@ -55,9 +54,16 @@
     cursor: pointer;
 }
 
+.close{
+    position: absolute;
+    top: 1.5vw;
+    right: 1.5vw;
+    cursor: pointer;
+    font-size: 1.5vw;
+}
+
 .Button{
     align-self: center;
     width: 85%;
     margin-top: 2vw;
 }
-

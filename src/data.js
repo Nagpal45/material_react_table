@@ -1,3 +1,10 @@
+import moment from "moment";
+const CustomDateCell = (value) => {
+    const date = new Date(value.renderedCellValue);
+    const formattedDate = moment(date).format('DD-MMM-YYYY')
+    return <span>{formattedDate}</span>;
+};
+  
 export const tableCols = [
     {
         accessorKey: "id",
@@ -23,11 +30,13 @@ export const tableCols = [
         accessorKey: "createdAt",
         header: "Created At",
         size: 150,
+        Cell: CustomDateCell,
       },
       {
         accessorKey: "updatedAt",
         header: "Updated At",
         size: 150,
+        Cell: CustomDateCell,
       },
       {
         accessorKey: "price",

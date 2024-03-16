@@ -1,10 +1,4 @@
 import moment from "moment";
-const CustomDateCell = (value) => {
-    const date = new Date(value.renderedCellValue);
-    const formattedDate = moment(date).format('DD-MMM-YYYY')
-    return <span>{formattedDate}</span>;
-};
-  
 export const tableCols = [
     {
         accessorKey: "id",
@@ -14,34 +8,42 @@ export const tableCols = [
       {
         accessorKey: "name",
         header: "Name",
+        filterVariant: 'text',
         size: 150,
+        filterFn: 'fuzzy'
       },
       {
         accessorKey: "category",
         header: "Category",
         size: 200,
+        filterVariant: 'multi-select'
       },
       {
         accessorKey: "subcategory",
         header: "Subcategory",
         size: 150,
+        filterVariant: 'multi-select'
+
       },
       {
         accessorKey: "createdAt",
         header: "Created At",
         size: 150,
-        Cell: CustomDateCell,
+        filterVariant: 'date-range',
+        Cell: (value) => moment(value.renderedCellValue).format('DD-MMM-YYYY'),
       },
       {
         accessorKey: "updatedAt",
         header: "Updated At",
         size: 150,
-        Cell: CustomDateCell,
+        Cell: (value) => moment(value.renderedCellValue).format('DD-MMM-YYYY'),
+        filterVariant: 'date-range',
       },
       {
         accessorKey: "price",
         header: "Price",
         size: 150,
+        filterVariant :'range-slider'
       },
       {
         accessorKey: "sale_price",

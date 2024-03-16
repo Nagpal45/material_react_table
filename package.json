@@ -15,11 +15,13 @@
     "@mui/material": "^5.15.13",
     "@mui/styles": "^5.15.13",
     "@mui/x-date-pickers": "^6.19.7",
+    "@mui/x-date-pickers-pro": "^6.19.7",
+    "dayjs": "^1.11.10",
+    "fuzzysearch": "^1.0.3",
     "material-react-table": "^2.12.1",
     "moment": "^2.30.1",
     "next": "14.1.3",
     "react": "^18",
-    "react-datepicker": "^6.3.0",
     "react-dom": "^18"
   },
   "devDependencies": {

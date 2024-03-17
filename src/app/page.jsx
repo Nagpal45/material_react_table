@@ -1,44 +1,24 @@
 "use client";
 import { useMemo, useState } from "react";
 import { data, tableCols } from "@/data";
-import {
-  MRT_GlobalFilterTextField,
-  MRT_TableHeadCellFilterContainer,
-  MRT_TablePagination,
-  MaterialReactTable,
-  useMaterialReactTable,
-} from "material-react-table";
+import {MRT_GlobalFilterTextField,MRT_TablePagination,MaterialReactTable,useMaterialReactTable} from "material-react-table";
 import styles from "./page.module.css";
-import {
-  Box,
-  Drawer,
-  IconButton,
-  Stack,
-  Tooltip,
-  lighten,
-} from "@mui/material";
-import {
-  Close,
-  FilterList,
-  Layers,
-  SwapVertTwoTone,
-  VisibilityOutlined,
-} from "@mui/icons-material";
+import {Box,Drawer,IconButton,Tooltip,lighten,} from "@mui/material";
+import {Close,FilterList,Layers,SwapVertTwoTone,VisibilityOutlined} from "@mui/icons-material";
 import Group from "@/components/groupBar/group";
 import Showhide from "@/components/showHideBar/showHide";
 import Sort from "@/components/sortBar/sortBar";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import Filter from "@/components/filterBar/filter";
 
 
 const App = () => {
   const columns = useMemo(() => tableCols, []);
   const [sorting, setSorting] = useState([]);
   const [columnSorts, setColumnSorts] = useState({});
-
-
-
   const [sidePanel, setSidePanel] = useState("");
+
   const handleSidePanel = (type) => {
     setSidePanel(type);
   };
@@ -136,8 +116,6 @@ const App = () => {
         width: "80%",
       },
     },
-
-
     enableFilters: true,
     enableFacetedValues: true,
     columnFilterDisplayMode: "custom",
@@ -304,27 +282,7 @@ const App = () => {
           )}
           {sidePanel === "filter" && (
             <>
-              <div className={styles.sidePanel}>
-                <h2>Filters</h2>
-                <div className={styles.sepLine}></div>
-                {/* <FilterPanel filters={columnFilters} setColumnFilters={setColumnFilters} data={data}/> */}
-                <Stack gap="0.5vw" sx={{ height: "100%", width: "100%" }}>
-                  {table?.getLeafHeaders()?.filter(header =>
-                    tableCols.some(col => col.accessorKey === header.id) &&
-                    !["id", "sale_price"].includes(header.id)
-                  ).map((header) => (
-                    <div key={header.id} className={styles.filter}>
-                      <p>{header.column.columnDef.header}</p>
-                      <MRT_TableHeadCellFilterContainer
-                        key={header.id}
-                        header={header}
-                        table={table}
-                        in
-                      />
-                    </div>
-                  ))}
-                </Stack>
-              </div>
+              <Filter table={table} tableCols={tableCols}/>
               <Close
                 className={styles.close}
                 onClick={() => setSidePanel("")}

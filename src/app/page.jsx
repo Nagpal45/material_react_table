@@ -85,14 +85,14 @@ const App = () => {
     muiTableBodyRowProps: {
       hover: false,
     },
-    
+
     muiTablePaperProps: {
       sx: {
         boxShadow: "none",
       },
     },
     muiTableProps: {
-      sx: { overflow: "hidden", border:"1px solid gray" },
+      sx: { overflow: "hidden", border: "1px solid gray" },
     },
     enableMultiSort: true,
     onSortingChange: setSorting,
@@ -122,13 +122,13 @@ const App = () => {
     muiFilterTextFieldProps: {
       inputProps: { style: { fontSize: "1vw", padding: "10px", } },
       SelectProps: { style: { fontSize: "1vw", padding: "10px", } },
-      
+
       sx: {
         border: "1px solid rgba(224, 224, 224, 1)",
       },
     },
 
-    muiFilterDatePickerProps:{
+    muiFilterDatePickerProps: {
       format: "DD-MMM-YYYY",
     },
     muiFilterSliderProps: {
@@ -136,7 +136,7 @@ const App = () => {
         width: "80%",
       },
     },
-  
+
 
     enableFilters: true,
     enableFacetedValues: true,
@@ -308,16 +308,19 @@ const App = () => {
                 <h2>Filters</h2>
                 <div className={styles.sepLine}></div>
                 {/* <FilterPanel filters={columnFilters} setColumnFilters={setColumnFilters} data={data}/> */}
-                <Stack gap="0.5vw" sx={{height:"100%", width:"100%"}}>
-                  {table?.getLeafHeaders()?.map((header) => (
+                <Stack gap="0.5vw" sx={{ height: "100%", width: "100%" }}>
+                  {table?.getLeafHeaders()?.filter(header =>
+                    tableCols.some(col => col.accessorKey === header.id) &&
+                    !["id", "sale_price"].includes(header.id)
+                  ).map((header) => (
                     <div key={header.id} className={styles.filter}>
-                    <p>{header.column.columnDef.header}</p>
-                    <MRT_TableHeadCellFilterContainer
-                      key={header.id}
-                      header={header}
-                      table={table}
-                      in
-                    />
+                      <p>{header.column.columnDef.header}</p>
+                      <MRT_TableHeadCellFilterContainer
+                        key={header.id}
+                        header={header}
+                        table={table}
+                        in
+                      />
                     </div>
                   ))}
                 </Stack>

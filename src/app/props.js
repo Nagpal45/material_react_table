@@ -1,7 +1,3 @@
-import {Box,IconButton,Tooltip,lighten,} from "@mui/material";
-import {FilterList,Layers,SwapVertTwoTone,VisibilityOutlined} from "@mui/icons-material";
-import {MRT_GlobalFilterTextField,MRT_TablePagination} from "material-react-table";
-
 export const props = {
     muiTableBodyCellProps: {
         sx: {
@@ -80,74 +76,5 @@ export const props = {
     enableFilters: true,
     enableFacetedValues: true,
     columnFilterDisplayMode: "custom",
-    renderTopToolbar: ({ table }) => {
-        return (
-          <Box
-            sx={(theme) => ({
-              backgroundColor: lighten(theme.palette.background.default, 0.05),
-              display: "flex",
-              gap: "0.5rem",
-              padding: "28px",
-              justifyContent: "flex-end",
-            })}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                gap: "0.5rem",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <MRT_GlobalFilterTextField table={table} size="large" fullWidth />
-              <Tooltip title="Show / Hide Columns">
-                <IconButton
-                  onClick={() => handleSidePanel("showHide")}
-                  sx={{ marginLeft: "1vw" }}
-                >
-                  <VisibilityOutlined sx={{ fontSize: "1.5vw" }} />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Sort By Columns">
-                <IconButton
-                  onClick={() => handleSidePanel("sort")}
-                  sx={{ marginLeft: "1vw" }}
-                >
-                  <SwapVertTwoTone sx={{ fontSize: "1.5vw" }} />
-                </IconButton>
-              </Tooltip>
-              <Tooltip
-                title="Filter By Columns"
-                onClick={() => handleSidePanel("filter")}
-                sx={{ marginLeft: "1vw" }}
-              >
-                <IconButton>
-                  <FilterList sx={{ fontSize: "1.5vw" }} />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Group By Columns">
-                <IconButton
-                  onClick={() => handleSidePanel("group")}
-                  sx={{ marginLeft: "1vw" }}
-                >
-                  <Layers sx={{ fontSize: "1.5vw" }} />
-                </IconButton>
-              </Tooltip>
-            </Box>
-          </Box>
-        );
-      },
-      renderBottomToolbar: ({ table }) => {
-        return (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: "1vw",
-            }}
-          >
-            <MRT_TablePagination table={table} />
-          </Box>
-        );
-      },
+    
     }
